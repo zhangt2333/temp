@@ -18,9 +18,10 @@ jobs:
           cd hadoop
           git checkout a3b9c37
           sed -i 's/docker run -i -t/docker run -i/g' ./dev-support/bin/create-release
-          ./dev-support/bin/create-release --docker --mvncache --artifactsdir
+          ./dev-support/bin/create-release --docker --mvncache --artifactsdir || { echo "Failed to checkout commit"; }
           gh release create "temp" \
             --title "temp" \
             --prerelease \
             --notes "temp"
+          gh release upload "temp" ./patchprocess/mvn_install.log
           gh release upload "temp" ./target/artifacts/*.tar.gz
