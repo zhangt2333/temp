@@ -1,0 +1,25 @@
+name: Build Hadoop
+
+on:
+  workflow_dispatch: # add manual trigger button
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 8
+          distribution: temurin
+
+      - name: Build Hadoop
+        run: |
+          git clone https://github.com/apache/hadoop
+          cd hadoop
+          git checkout a3b9c37
+          ./dev-support/bin/create-release --docker --mvncache --artifactsdir
+          gh release create "temp" \
+            --title "temp" \
+            --prerelease \
+            --notes "temp"
+          gh release upload "temp" ./target/artifacts/*.tar.gz
