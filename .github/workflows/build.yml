@@ -17,7 +17,7 @@ jobs:
           git clone https://github.com/apache/hadoop
           cd hadoop
           git checkout a3b9c37
-          sed 's/docker run -i -t/docker run -i/g' ./dev-support/bin/create-release
+          sed -i 's/docker run -i -t/docker run -i/g' ./dev-support/bin/create-release
           ./dev-support/bin/create-release --docker --mvncache --artifactsdir
           gh release create "temp" \
             --title "temp" \
